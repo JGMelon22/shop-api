@@ -81,4 +81,42 @@ class ProductController extends Controller
             ]);
         }
     }
+
+    function updateProduct(Request $request)
+    {
+        $request->validate([
+            "id" => "required",
+            "name" => "required",
+            "description" => "required",
+            "skuNumber" => "required",
+            "category" => "required",
+            "supplier" => "required",
+            "numberAvailable" => "required",
+            "price" => "required",
+        ]);
+
+        $product = ProductModel::find($request->id);
+
+        if ($product) {
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->skuNumber = $request->skuNumber;
+            $product->category = $request->category;
+            $product->supplier = $request->supplier;
+            $product->numberAvailable = $request->name;
+            $product->price = $request->name;
+            $product->save();
+            return response([
+                "message" => "success",
+                "products" => $product,
+                "status" => 200,
+            ]);
+        } else {
+            return response([
+                "message" => "erro",
+                "products" => "Product does not exist",
+                "status" => 404,
+            ]);
+        }
+    }
 }
