@@ -1,6 +1,5 @@
 # shop-api
-A simple Web API made with Laravel 12 and PHP 8.4. <br/>
-Do not take it to serious. It is just a quick holy day project to learn Laravel and PHP.
+A simple Web API made with Laravel 12 and PHP 8.4. Do not take it to serious. It is just a quick holiday project to learn Laravel and PHP.
 
 ## 🧰 Tech Stack
 <p>
@@ -14,5 +13,5 @@ Do not take it to serious. It is just a quick holy day project to learn Laravel 
 
 <br/>
 
-> "There is power that is not knowledge."  
+> "There is no knowledge that is not power."
 > — *Mortal Kombat*
