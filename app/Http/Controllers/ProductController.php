@@ -119,4 +119,25 @@ class ProductController extends Controller
             ]);
         }
     }
+
+    function deleteProduct(Request $request)
+    {
+        $request->validate(["id" => "required"]);
+        $product = ProductModel::find($request->id);
+
+        if ($product) {
+            $product->delete();
+            return response([
+                "message" => "success",
+                "products" => "Product has been deleted successfully!",
+                "status" => 200,
+            ]);
+        } else {
+            return response([
+                "message" => "error",
+                "products" => "Product does not exist!",
+                "status" => 404,
+            ]);
+        }
+    }
 }
