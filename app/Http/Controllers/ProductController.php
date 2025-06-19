@@ -7,7 +7,7 @@ use App\Models\ProductModel;
 
 class ProductController extends Controller
 {
-    function CreateProduct(Request $request)
+    function createProduct(Request $request)
     {
         $request->validate([
             "name" => "required",
@@ -18,7 +18,6 @@ class ProductController extends Controller
             "numberAvailable" => "required",
             "price" => "required",
         ]);
-        /*we create the record as shown below:*/
 
         $product = ProductModel::create([
             "name" => $request->name,
@@ -31,6 +30,7 @@ class ProductController extends Controller
         ]);
 
         $product = ProductModel::find($product->id);
+
         if ($product) {
             return response([
                 "message" => "success",
@@ -58,6 +58,26 @@ class ProductController extends Controller
             return response([
                 "message" => "error",
                 "products" => "No products in database",
+            ]);
+        }
+    }
+
+    function getProduct(Request $request)
+    {
+        $request->validate(["id" => "required"]);
+        $product = ProductModel::find($request->id);
+
+        if ($product) {
+            return response([
+                "message" => "success",
+                "products" => $product,
+                "status" => 200,
+            ]);
+        } else {
+            return response([
+                "message" => "error",
+                "products" => "Product does not exis",
+                "status" => 404,
             ]);
         }
     }

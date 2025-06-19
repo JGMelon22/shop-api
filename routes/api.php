@@ -11,3 +11,4 @@ Route::get("/user", function (Request $request) {
 
 Route::post("/product", [ProductController::class, "createProduct"]);
 Route::get("/products", [ProductController::class, "getAllProducts"]);
+Route::get("/product", [ProductController::class, "getProduct"]);
