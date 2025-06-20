@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
     function createProduct(Request $request)
     {
+        Log::info("Trying to create a new Product ", [
+            "product" => $request->all(),
+        ]);
+
         $request->validate([
             "name" => "required",
             "description" => "required",
@@ -37,18 +42,29 @@ class ProductController extends Controller
                 "product" => $product,
                 "status" => 200,
             ]);
+
+            Log::info("Product with Id {id} successfully created", [
+                "product" => $$product->id(),
+            ]);
         } else {
             return response([
                 "message" => "error",
                 "product" => "product does not exist!",
                 "status" => 404,
             ]);
+
+            Log::error("Something went wrong when creating a new product");
         }
     }
 
     function getAllProducts()
     {
         $products = ProductModel::all();
+
+        Log::info("Fetching all {count} products", [
+            "count" => $products->count(),
+        ]);
+
         if ($products) {
             return response([
                 "message" => "Success",
@@ -59,6 +75,8 @@ class ProductController extends Controller
                 "message" => "error",
                 "products" => "No products in database",
             ]);
+
+            Log::warning("There are no Products in the database!");
         }
     }
 
