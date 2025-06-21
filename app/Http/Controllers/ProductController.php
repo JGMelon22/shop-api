@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use OpenApi\Attributes as OA;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
 
+#[OA\Info(title: 'My First API', version: '0.1')]
 class ProductController extends Controller
 {
+    #[OA\Post(path: '/api/product', operationId: 'createProduct')]
+    #[OA\Response(response: '201', description: 'Product created')]
+    #[OA\Response(response: '422', description: 'Validation error')]
     function createProduct(Request $request)
     {
         $request->validate([
@@ -46,6 +51,8 @@ class ProductController extends Controller
         }
     }
 
+    #[OA\Get(path: '/api/products', operationId: 'getAllProducts')]
+    #[OA\Response(response: '200', description: 'List of all products')]
     function getAllProducts()
     {
         $products = ProductModel::all();
@@ -62,6 +69,10 @@ class ProductController extends Controller
         }
     }
 
+    #[OA\Get(path: '/api/product', operationId: 'getProduct')]
+    #[OA\Parameter(name: 'id', in: 'query', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: '200', description: 'Product found')]
+    #[OA\Response(response: '404', description: 'Product not found')]
     function getProduct(Request $request)
     {
         $request->validate(["id" => "required"]);
@@ -82,6 +93,9 @@ class ProductController extends Controller
         }
     }
 
+    #[OA\Put(path: '/api/product', operationId: 'updateProduct')]
+    #[OA\Response(response: '200', description: 'Product updated')]
+    #[OA\Response(response: '404', description: 'Product not found')]
     function updateProduct(Request $request)
     {
         $request->validate([
@@ -120,6 +134,9 @@ class ProductController extends Controller
         }
     }
 
+    #[OA\Delete(path: '/api/product', operationId: 'deleteProduct')]
+    #[OA\Response(response: '200', description: 'Product deleted')]
+    #[OA\Response(response: '404', description: 'Product not found')]
     function deleteProduct(Request $request)
     {
         $request->validate(["id" => "required"]);
